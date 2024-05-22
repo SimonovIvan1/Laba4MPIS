@@ -27,7 +27,21 @@ namespace Laba4MPIS.Controllers
         [HttpPost]
         public Price Create(Price newItem)
         {
-            _db.Price.Add(newItem);
+            var priceDb = _db.Price.FirstOrDefault(x => x.Id == newItem.Id);
+            if (priceDb == null) _db.Price.Add(newItem);
+            else 
+            {
+                priceDb.price = newItem.price;
+                _db.Price.Update(priceDb);
+            } 
+            _db.SaveChanges();
+
+            var aud = new PriceAudit
+            {
+                GoodId = newItem.Id,
+                Date = DateTime.Now.ToString()
+            };
+            _db.PriceAudits.Add(aud);
             _db.SaveChanges();
             return newItem;
         }
@@ -51,5 +65,6 @@ namespace Laba4MPIS.Controllers
             _db.SaveChanges();
             return item;
         }
+
     }
 }

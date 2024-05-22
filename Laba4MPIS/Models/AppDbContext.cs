@@ -16,7 +16,6 @@ namespace Laba4MPIS.Models
         public DbSet<Users> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PriceAudit>(x => x.HasNoKey());
         }
     }
 }
