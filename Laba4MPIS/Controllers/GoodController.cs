@@ -37,8 +37,7 @@ namespace Laba4MPIS.Controllers
         {
             var item = _db.Goods.FirstOrDefault(x => x.Id == id);
             if (item == null) return null;
-            _db.Goods.Remove(item);
-            return item;
+            return Delete(item);
         }
 
         [HttpPut]
@@ -47,7 +46,16 @@ namespace Laba4MPIS.Controllers
             var itemBase = _db.Goods.FirstOrDefault(x => x.Id == item.Id);
             if(itemBase == null) return Create(item);
             _db.Goods.Update(item);
+            _db.SaveChanges();
             return item;
+        }
+
+        private Goods Delete(Goods good)
+        {
+            good.IsDeleted = true;
+            _db.Goods.Update(good);
+            _db.SaveChanges();
+            return good;
         }
     }
 }

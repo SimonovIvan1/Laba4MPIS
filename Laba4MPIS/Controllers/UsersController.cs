@@ -38,6 +38,7 @@ namespace Laba4MPIS.Controllers
             var item = _db.Users.FirstOrDefault(x => x.Id == id);
             if (item == null) return null;
             _db.Users.Remove(item);
+            _db.SaveChanges();
             return item;
         }
 
@@ -47,6 +48,7 @@ namespace Laba4MPIS.Controllers
             var itemBase = _db.Users.FirstOrDefault(x => x.Id == item.Id);
             if (itemBase == null) return Create(item);
             _db.Users.Update(item);
+            _db.SaveChanges();
             return item;
         }
     }
