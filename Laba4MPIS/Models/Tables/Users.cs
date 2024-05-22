@@ -5,6 +5,7 @@ namespace Laba4MPIS.Models.Tables
     [Table("users")]
     public class Users
     {
+        [Column("id")]
         public int Id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
