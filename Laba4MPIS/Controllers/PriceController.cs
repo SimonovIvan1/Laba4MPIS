@@ -61,9 +61,10 @@ namespace Laba4MPIS.Controllers
         {
             var itemBase = _db.Price.FirstOrDefault(x => x.Id == item.Id);
             if (itemBase == null) return Create(item);
-            _db.Price.Update(item);
+            itemBase.price = item.price;
+            _db.Price.Update(itemBase);
             _db.SaveChanges();
-            return item;
+            return itemBase;
         }
 
     }
