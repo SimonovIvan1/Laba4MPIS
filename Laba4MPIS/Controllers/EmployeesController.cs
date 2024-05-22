@@ -41,12 +41,12 @@ namespace Laba4MPIS.Controllers
         [HttpPut]
         public List<Employees> Update(string departmentName, int salary)
         {
-            var itemBase = _db.Employees.Where(x => x.department == departmentName).ToList();
-            return Procedur1(itemBase, salary);
+            return Procedur1(departmentName, salary);
         }
 
-        private List<Employees> Procedur1(List<Employees> itemBase, int salary)
+        private List<Employees> Procedur1(string departmentName, int salary)
         {
+            var itemBase = _db.Employees.Where(x => x.department == departmentName).ToList();
             foreach (var item in itemBase)
             {
                 item.salary += salary;
