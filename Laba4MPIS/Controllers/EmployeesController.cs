@@ -19,9 +19,9 @@ namespace Laba4MPIS.Controllers
         }
 
         [HttpGet]
-        public List<Employees> Get()
+        public List<Employees> Get(string department)
         {
-            return _db.Employees.ToList();
+            return Procedur2(department);
         }
 
         [HttpPost]
@@ -33,13 +33,9 @@ namespace Laba4MPIS.Controllers
         }
 
         [HttpDelete]
-        public Employees? Update(int id)
+        public List<Employees> Update(string name)
         {
-            var item = _db.Employees.FirstOrDefault(x => x.Id == id);
-            if (item == null) return null;
-            _db.Employees.Remove(item);
-            _db.SaveChanges();
-            return item;
+            return Procedur3(name);
         }
 
         [HttpPut]
@@ -58,6 +54,17 @@ namespace Laba4MPIS.Controllers
                 _db.SaveChanges();
             }
             return itemBase;
+        }
+        private List<Employees> Procedur2(string department)
+        {
+            return _db.Employees.Where(x => x.department == department).ToList();
+        }
+        private List<Employees> Procedur3(string name)
+        {
+            var items = _db.Employees.Where(x => x.name == name).ToList();
+            _db.Employees.RemoveRange(items);
+            _db.SaveChanges();
+            return items;
         }
     }
 }
