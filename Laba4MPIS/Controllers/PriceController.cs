@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Laba4MPIS.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class PriceController : Controller
     {
         private readonly AppDbContext _db;
