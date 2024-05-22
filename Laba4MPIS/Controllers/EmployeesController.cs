@@ -43,13 +43,21 @@ namespace Laba4MPIS.Controllers
         }
 
         [HttpPut]
-        public Employees Update(Employees item)
+        public List<Employees> Update(string departmentName, int salary)
         {
-            var itemBase = _db.Goods.FirstOrDefault(x => x.Id == item.Id);
-            if (itemBase == null) return Create(item);
-            _db.Employees.Update(item);
-            _db.SaveChanges();
-            return item;
+            var itemBase = _db.Employees.Where(x => x.department == departmentName).ToList();
+            return Procedur1(itemBase, salary);
+        }
+
+        private List<Employees> Procedur1(List<Employees> itemBase, int salary)
+        {
+            foreach (var item in itemBase)
+            {
+                item.salary += salary;
+                _db.Employees.Update(item);
+                _db.SaveChanges();
+            }
+            return itemBase;
         }
     }
 }
