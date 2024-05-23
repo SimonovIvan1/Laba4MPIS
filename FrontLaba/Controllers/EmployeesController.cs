@@ -34,9 +34,9 @@ namespace Laba4MPIS.Controllers
             return View(Procedur3(name));
         }
 
-        public List<Employees> Update(string departmentName, int salary)
+        public IActionResult Update(string departmentName, int salary)
         {
-            return Procedur1(departmentName, salary);
+            return View(Procedur1(departmentName, salary));
         }
 
         private List<Employees> Procedur1(string departmentName, int salary)
