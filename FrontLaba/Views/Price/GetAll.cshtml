@@ -1,0 +1,58 @@
+﻿@using Laba4MPIS.Models.Tables
+@model List<Employees>
+@{
+    ViewData["Title"] = "Сотрудники";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Список сотрудников</title>
+</head>
+<body>
+    <h3>Сотрудники</h3>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td>Отдел</td>
+            <td>Зарплата</td>
+            <td></td>
+        </tr>
+        @foreach (var phone in Model)
+        {
+            <tr>
+                <td>@phone.name</td>
+                <td>@phone.department</td>
+                <td>@phone.salary</td>
+                <td><a href="~/Home/Buy/@phone.Id">Купить</a></td>
+                <td><a href="~/Employees/Delete/?name=@phone.name">Удалить</a></td>
+            </tr>
+        }
+        <td><a href="~/Employees/Update/">Изменить зарплату</a></td>
+        <td><a href="~/Employees/Create/">Создать нового сотрудника</a></td>
+        <form method="get">
+            <div>
+                <label for="department">Поиск сотрудников по отделу:</label>
+                <input type="text" name="department" value="" />
+                <input type="Submit" value="Поиск" /><br />
+                <br />
+            </div>
+        </form>
+        <h2>Добавление нового сотрудника в отдел</h2>
+        <h3>Информация о сотруднике</h3>
+        <form method="post" action="Create">
+            <div>
+                <label for="name">Имя:</label>
+                <input type="text" name="name" value="" />
+                <label for="department">Отдел:</label>
+                <input type="text" name="department" value="" />
+                <label for="salary">На сумму:</label>
+                <input type="number" name="salary" value="" />
+                <input type="Submit" value="Добавить в отдел" /><br />
+                <br />
+            </div>
+        </form>
+    </table>
+</body>
+</html>

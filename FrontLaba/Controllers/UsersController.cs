@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Laba4MPIS.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class UsersController : Controller
     {
         private readonly AppDbContext _db;
@@ -18,31 +16,27 @@ namespace Laba4MPIS.Controllers
             _db = new AppDbContext(db);
         }
 
-        [HttpGet]
-        public List<Users> Get()
+        public IActionResult GetAll()
         {
-            return _db.Users.ToList();
+            return View(_db.Users.ToList());
         }
 
-        [HttpPost]
-        public Users Create(Users newItem)
+        public IActionResult Create(Users newItem)
         {
             _db.Users.Add(newItem);
             _db.SaveChanges();
-            return newItem;
+            return Redirect("https://localhost:7049/Users/GetAll");
         }
 
-        [HttpDelete]
-        public Users? Update(int id)
+        public IActionResult Delete(int id)
         {
             var item = _db.Users.FirstOrDefault(x => x.Id == id);
             if (item == null) return null;
             _db.Users.Remove(item);
             _db.SaveChanges();
-            return item;
+            return Redirect("https://localhost:7049/Users/GetAll");
         }
-
-        [HttpPut]
+        /*
         public Users Update(Users item)
         {
             var itemBase = _db.Users.FirstOrDefault(x => x.Id == item.Id);
@@ -50,6 +44,6 @@ namespace Laba4MPIS.Controllers
             _db.Users.Update(item);
             _db.SaveChanges();
             return item;
-        }
+        }*/
     }
 }
