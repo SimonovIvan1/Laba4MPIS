@@ -1,17 +1,17 @@
 ﻿@using Laba4MPIS.Models.Tables
 @model List<Employees>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Сотрудники";
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Магазин смартфонов</title>
+    <title>Список сотрудников</title>
 </head>
 <body>
-    <h3>Смартфоны</h3>
+    <h3>Сотрудники</h3>
     <table>
         <tr>
             <td>Имя</td>
@@ -26,6 +26,7 @@
                 <td>@phone.department</td>
                 <td>@phone.salary</td>
                 <td><a href="~/Home/Buy/@phone.Id">Купить</a></td>
+                <td><a href="~/Employees/Delete/?name=@phone.name">Удалить</a></td>
             </tr>
         }
         <form method="get">
@@ -33,7 +34,7 @@
                 <label for="department">Поиск сотрудников по отделу:</label>
                 <input type="text" name="department" value="" />
                 <input type="Submit" value="Поиск" /><br />
-                (Leave blank to list all movies.)<br />
+                <br />
             </div>
         </form>
     </table>

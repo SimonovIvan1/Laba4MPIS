@@ -22,7 +22,6 @@ namespace Laba4MPIS.Controllers
             return View(Procedur2(department));
         }
 
-
         public Employees Create(Employees newItem)
         {
             _db.Employees.Add(newItem);
@@ -30,9 +29,9 @@ namespace Laba4MPIS.Controllers
             return newItem;
         }
 
-        public List<Employees> Delete(string name)
+        public IActionResult Delete(string name)
         {
-            return Procedur3(name);
+            return View(Procedur3(name));
         }
 
         public List<Employees> Update(string departmentName, int salary)
