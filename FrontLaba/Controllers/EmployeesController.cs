@@ -2,6 +2,7 @@
 using Laba4MPIS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace Laba4MPIS.Controllers
 {
@@ -22,11 +23,17 @@ namespace Laba4MPIS.Controllers
             return View(Procedur2(department));
         }
 
-        public Employees Create(Employees newItem)
+        public IActionResult Create(string name, string department, int salary)
         {
-            _db.Employees.Add(newItem);
+            var newEmp = new Employees()
+            {
+                name = name,
+                department = department,
+                salary = salary
+            };
+            _db.Employees.Add(newEmp);
             _db.SaveChanges();
-            return newItem;
+            return Redirect("https://localhost:7049/Employees/GetAll");
         }
 
         public IActionResult Delete(string name)
