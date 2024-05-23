@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Laba4MPIS.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class EmployeesController : Controller
     {
         private readonly AppDbContext _db;
@@ -18,13 +16,13 @@ namespace Laba4MPIS.Controllers
             _db = new AppDbContext(db);
         }
 
-        [HttpGet]
-        public List<Employees> Get(string department)
+        public IActionResult GetAll(string? department)
         {
-            return Procedur2(department);
+            if (department == null) return View(_db.Employees.ToList());
+            return View(Procedur2(department));
         }
 
-        [HttpPost]
+
         public Employees Create(Employees newItem)
         {
             _db.Employees.Add(newItem);
@@ -32,13 +30,11 @@ namespace Laba4MPIS.Controllers
             return newItem;
         }
 
-        [HttpDelete]
-        public List<Employees> Update(string name)
+        public List<Employees> Delete(string name)
         {
             return Procedur3(name);
         }
 
-        [HttpPut]
         public List<Employees> Update(string departmentName, int salary)
         {
             return Procedur1(departmentName, salary);
