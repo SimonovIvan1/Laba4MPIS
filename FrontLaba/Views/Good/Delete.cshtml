@@ -1,43 +1,15 @@
-﻿@using Laba4MPIS.Models.Tables
-@model List<Employees>
+﻿
 @{
-    ViewData["Title"] = "Сотрудники";
+    ViewData["Title"] = "Товары";
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Список сотрудников</title>
+    <title>Удаление прошло успешно</title>
 </head>
 <body>
-    <h3>Сотрудники</h3>
-    <table>
-        <tr>
-            <td>Имя</td>
-            <td>Отдел</td>
-            <td>Зарплата</td>
-            <td></td>
-        </tr>
-        @foreach (var phone in Model)
-        {
-            <tr>
-                <td>@phone.name</td>
-                <td>@phone.department</td>
-                <td>@phone.salary</td>
-                <td><a href="~/Home/Buy/@phone.Id">Купить</a></td>
-                <td><a href="~/Employees/Delete/?name=@phone.name">Удалить</a></td>
-            </tr>
-        }
-        <td><a href="~/Employees/Update/">Изменить зарплату</a></td>
-        <form method="get">
-            <div>
-                <label for="department">Поиск сотрудников по отделу:</label>
-                <input type="text" name="department" value="" />
-                <input type="Submit" value="Поиск" /><br />
-                <br />
-            </div>
-        </form>
-    </table>
+    
 </body>
 </html>

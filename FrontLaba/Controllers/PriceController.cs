@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Laba4MPIS.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
     public class PriceController : Controller
     {
         private readonly AppDbContext _db;
@@ -18,10 +16,9 @@ namespace Laba4MPIS.Controllers
             _db = new AppDbContext(db);
         }
 
-        [HttpGet]
-        public List<Price> Get()
+        public IActionResult GetAll()
         {
-            return _db.Price.ToList();
+            return View(_db.Price.ToList());
         }
 
         [HttpPost]

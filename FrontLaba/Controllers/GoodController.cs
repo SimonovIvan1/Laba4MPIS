@@ -3,51 +3,48 @@ using Laba4MPIS.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Laba4MPIS.Controllers
+namespace FrontLaba.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class GoodController : ControllerBase
+    public class GoodController : Controller
     {
         private readonly AppDbContext _db;
-        private readonly ILogger<WeatherForecastController> _logger;
 
-        public GoodController(ILogger<WeatherForecastController> logger, DbContextOptions<AppDbContext> db)
+        public GoodController(DbContextOptions<AppDbContext> db)
         {
-            _logger = logger;
             _db = new AppDbContext(db);
         }
 
-        [HttpGet]
-        public List<Goods> Get()
+        public IActionResult GetAll()
         {
-           return _db.Goods.ToList();
+           return View(_db.Goods.ToList());
         }
 
-        [HttpPost]
-        public Goods Create(Goods newItem)
+        public IActionResult Create(string name)
         {
+            var goods = _db.Goods.ToList();
+            int lastId = 0;
+            foreach(var good in goods)
+            {
+                if (lastId < good.Id) lastId = good.Id;
+            }
+            var newItem = new Goods()
+            { 
+                Id = lastId == 0 ? 1 : lastId + 1,
+                Name = name,
+                PriceId = 1,
+                IsDeleted = false
+            };
+
             _db.Goods.Add(newItem);
             _db.SaveChanges();
-            return newItem;
+            return View(newItem);
         }
 
-        [HttpDelete]
-        public Goods? Update(int id)
+        public IActionResult Delete(int id)
         {
             var item = _db.Goods.FirstOrDefault(x => x.Id == id);
             if (item == null) return null;
-            return Delete(item);
-        }
-
-        [HttpPut]
-        public Goods Update(Goods item)
-        {
-            var itemBase = _db.Goods.FirstOrDefault(x => x.Id == item.Id);
-            if(itemBase == null) return Create(item);
-            _db.Goods.Update(item);
-            _db.SaveChanges();
-            return item;
+            return View(Delete(item));
         }
 
         private Goods Delete(Goods good)

@@ -36,14 +36,6 @@ namespace Laba4MPIS.Controllers
             _db.SaveChanges();
             return Redirect("https://localhost:7049/Users/GetAll");
         }
-        /*
-        public Users Update(Users item)
-        {
-            var itemBase = _db.Users.FirstOrDefault(x => x.Id == item.Id);
-            if (itemBase == null) return Create(item);
-            _db.Users.Update(item);
-            _db.SaveChanges();
-            return item;
-        }*/
+        
     }
 }
