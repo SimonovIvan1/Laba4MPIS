@@ -1,5 +1,5 @@
 ﻿@using Laba4MPIS.Models.Tables
-@model List<Price>
+@model List<PriceDto>
 @{
     ViewData["Title"] = "Цены";
 }
@@ -16,17 +16,22 @@
         <tr>
             <td>Id товара</td>
             <td>Цена</td>
-            <td></td>
+            <td>Даты изменения цен</td>
         </tr>
         @foreach (var phone in Model)
         {
             <tr>
-                <td>@phone.Id</td>
+                <td>@phone.GoodId</td>
                 <td>@phone.price</td>
+                
+                    @foreach (var audits in phone.PriceAudits)
+                    {
+                    <td>@audits.Date</td>
+                    }
                 
             </tr>
         }
-        
+        <td><a href="~/Price/Update/">Изменить цену</a></td>
     </table>
 </body>
 </html>

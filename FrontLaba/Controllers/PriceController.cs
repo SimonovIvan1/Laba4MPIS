@@ -2,6 +2,7 @@
 using Laba4MPIS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FrontLaba.Models;
 
 namespace Laba4MPIS.Controllers
 {
@@ -18,7 +19,19 @@ namespace Laba4MPIS.Controllers
 
         public IActionResult GetAll()
         {
-            return View(_db.Price.ToList());
+            var prices = _db.Price.ToList();
+            var pricesDtos = new List<PriceDto>();
+            foreach(var price in prices)
+            {
+                var priceDto = new PriceDto
+                {
+                    GoodId = price.Id,
+                    price = price.price,
+                    PriceAudits = _db.PriceAudits.Where(x => x.GoodId == price.Id).ToList()
+                };
+                pricesDtos.Add(priceDto);
+            }
+            return View(pricesDtos);
         }
 
         [HttpPost]
@@ -53,15 +66,14 @@ namespace Laba4MPIS.Controllers
             return item;
         }
 
-        [HttpPut]
-        public Price Update(Price item)
+        public IActionResult Update(int id, int price)
         {
-            var itemBase = _db.Price.FirstOrDefault(x => x.Id == item.Id);
-            if (itemBase == null) return Create(item);
-            itemBase.price = item.price;
+            var itemBase = _db.Price.FirstOrDefault(x => x.Id == id);
+            if (itemBase == null) return View();
+            itemBase.price = price;
             _db.Price.Update(itemBase);
             _db.SaveChanges();
-            return itemBase;
+            return View();
         }
 
     }
